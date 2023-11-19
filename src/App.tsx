@@ -48,6 +48,7 @@ function App() {
 
   const [outcomeHistory, setOutcomeHistory] = useState<OutcomeHistory[]>([])
   const [showsLottie, setShowsLottie] = useState(false)
+  const [participantIndicesOfGame, setParticipantIndicesOfGame] = useState<number[]>([])
   const [outcomeIndicesOfGame, setOutcomeIndicesOfGame] = useState<number[]>([])
   const lottieRef = useRef<DotLottieCommonPlayer>(null)
 
@@ -84,18 +85,30 @@ function App() {
   const handleResetGame = (e?: React.MouseEvent<HTMLButtonElement>) => {
     e?.preventDefault()
     setOutcomeIndicesOfGame([])
+    setParticipantIndicesOfGame([])
+    setOutcomeHistory([])
   }
 
   const handleSubmit: SubmitHandler<GameSchema> = (values) => {
-    if (outcomeIndicesOfGame.length === values.outcomes.length) {
+    if (
+      outcomeIndicesOfGame.length >= values.outcomes.length ||
+      participantIndicesOfGame.length >= values.participants.length
+    ) {
       handleResetGame()
       return
     }
 
     setShowsLottie(true)
-    const participantResultIndex = randomizeParticipantIndex(values.participants)
-    const outcomeResultIndex = randomizeOutcomeIndex(values.outcomes, outcomeIndicesOfGame)
+    const participantResultIndex = randomizeParticipantIndex({
+      participants: values.participants,
+      participantIndicesOfGame,
+    })
+    const outcomeResultIndex = randomizeOutcomeIndex({
+      outcomes: values.outcomes,
+      outcomeIndicesOfGame,
+    })
 
+    setParticipantIndicesOfGame(participantIndicesOfGame.concat([participantResultIndex]))
     setOutcomeIndicesOfGame(outcomeIndicesOfGame.concat([outcomeResultIndex]))
 
     setOutcomeHistory((history) => {
@@ -226,6 +239,7 @@ function App() {
                       autoComplete="off"
                       placeholder="이름"
                       style={{ minWidth: 80 }}
+                      disabled={!!participantIndicesOfGame.length}
                       rightSection={
                         <ActionIcon
                           variant="transparent"
@@ -245,7 +259,11 @@ function App() {
                 variant="filled"
                 aria-label="Add"
                 onClick={() => participantAppend({ value: ' ' })}
-                disabled={showsLottie || participantFields.length >= MAX_PARTICIPANTS_LENGTH}
+                disabled={
+                  showsLottie ||
+                  participantFields.length >= MAX_PARTICIPANTS_LENGTH ||
+                  !!participantIndicesOfGame.length
+                }
               >
                 <IconPlus stroke={1} />
               </ActionIcon>
