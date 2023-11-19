@@ -19,6 +19,7 @@ import { IconPlus, IconShare, IconTrash } from '@tabler/icons-react'
 import styles from './App.module.css'
 import GiftBoxOpenLottie from './components/GiftBoxOpenLottie'
 import Input from './components/Input'
+import { MAX_OUTCOMES_LENGTH, MAX_PARTICIPANTS_LENGTH } from './constants/game'
 import useQueryParams from './hooks/useQueryParams'
 import { gameSchema, GameSchema } from './schemas/game'
 import { randomizeParticipantIndex, randomizeOutcomeIndex } from './utils/game'
@@ -223,7 +224,7 @@ function App() {
                 variant="filled"
                 aria-label="Add"
                 onClick={() => participantAppend({ value: ' ' })}
-                disabled={showsLottie}
+                disabled={showsLottie || participantFields.length >= MAX_PARTICIPANTS_LENGTH}
               >
                 <IconPlus stroke={1} />
               </ActionIcon>
@@ -265,7 +266,11 @@ function App() {
                 variant="filled"
                 aria-label="Add"
                 onClick={() => outcomeAppend({ value: ' ' })}
-                disabled={showsLottie || outcomeFields.length >= participantFields.length}
+                disabled={
+                  showsLottie ||
+                  outcomeFields.length >= participantFields.length ||
+                  outcomeFields.length >= MAX_OUTCOMES_LENGTH
+                }
               >
                 <IconPlus stroke={1} />
               </ActionIcon>

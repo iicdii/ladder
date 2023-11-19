@@ -1,0 +1,2 @@
+export const MAX_PARTICIPANTS_LENGTH = 100
+export const MAX_OUTCOMES_LENGTH = 100
