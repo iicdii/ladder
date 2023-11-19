@@ -11,7 +11,18 @@ import {
 import { DotLottieCommonPlayer, PlayerEvents } from '@dotlottie/react-player'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Stack, Flex, ActionIcon, Button, Container, Text, Title, Mark } from '@mantine/core'
+import {
+  Stack,
+  Flex,
+  ActionIcon,
+  Button,
+  Container,
+  Text,
+  Title,
+  Mark,
+  Paper,
+  ScrollArea,
+} from '@mantine/core'
 import { useClipboard } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
 import { IconPlus, IconShare, IconTrash } from '@tabler/icons-react'
@@ -143,7 +154,7 @@ function App() {
         onSubmit={methods.handleSubmit(handleSubmit, handleSubmitError)}
         className={styles.container}
       >
-        <Container>
+        <Container w="100%">
           <Stack>
             {/* 당첨자 발표 영역 */}
             <Flex mih={180} justify="center" align="flex-end" direction="row" wrap="nowrap">
@@ -169,7 +180,7 @@ function App() {
             </Flex>
 
             {/* 당첨 내역 */}
-            <div className={styles.history}>
+            <Paper shadow="xs" p="xl" maw={500} miw={300} mx="auto" my={0} h={180}>
               {outcomeHistory.length >= 2
                 ? outcomeHistory.slice(1).map(({ participantName, outcomeName, createdAt }, i) => {
                     return (
@@ -186,40 +197,49 @@ function App() {
                     )
                   })
                 : null}
-            </div>
+            </Paper>
 
             {/* 참가자 입력 */}
-            <Flex mih={50} gap="md" justify="center" align="center" direction="row" wrap="nowrap">
-              <Flex
-                mih={50}
-                gap="md"
-                justify="center"
-                align="center"
-                direction="row"
-                wrap="nowrap"
-                style={{ overflowX: 'scroll' }}
-              >
-                {participantFields.map((field, index) => (
-                  <Input
-                    key={field.id}
-                    fieldName={`participants.${index}.value`}
-                    autoComplete="off"
-                    placeholder="이름"
-                    style={{ minWidth: 80 }}
-                    rightSection={
-                      <ActionIcon
-                        variant="transparent"
-                        color="red"
-                        aria-label="삭제"
-                        size="xs"
-                        onClick={() => participantRemove(index)}
-                      >
-                        <IconTrash stroke={1.5} />
-                      </ActionIcon>
-                    }
-                  />
-                ))}
-              </Flex>
+            <Title order={3}>참가자</Title>
+            <Flex
+              mih={50}
+              gap="md"
+              justify="space-between"
+              align="center"
+              direction="row"
+              wrap="nowrap"
+            >
+              <ScrollArea>
+                <Flex
+                  mih={50}
+                  gap="md"
+                  justify="center"
+                  align="center"
+                  direction="row"
+                  wrap="nowrap"
+                >
+                  {participantFields.map((field, index) => (
+                    <Input
+                      key={field.id}
+                      fieldName={`participants.${index}.value`}
+                      autoComplete="off"
+                      placeholder="이름"
+                      style={{ minWidth: 80 }}
+                      rightSection={
+                        <ActionIcon
+                          variant="transparent"
+                          color="red"
+                          aria-label="삭제"
+                          size="xs"
+                          onClick={() => participantRemove(index)}
+                        >
+                          <IconTrash stroke={1.5} />
+                        </ActionIcon>
+                      }
+                    />
+                  ))}
+                </Flex>
+              </ScrollArea>
               <ActionIcon
                 variant="filled"
                 aria-label="Add"
@@ -231,37 +251,47 @@ function App() {
             </Flex>
 
             {/* 당첨 결과 입력 */}
-            <Flex mih={50} gap="md" justify="center" align="center" direction="row" wrap="nowrap">
-              <Flex
-                mih={50}
-                gap="md"
-                justify="center"
-                align="center"
-                direction="row"
-                wrap="nowrap"
-                style={{ overflowX: 'scroll' }}
-              >
-                {outcomeFields.map((field, index) => (
-                  <Input
-                    key={field.id}
-                    fieldName={`outcomes.${index}.value`}
-                    autoComplete="off"
-                    placeholder="당첨 결과"
-                    style={{ minWidth: 80 }}
-                    rightSection={
-                      <ActionIcon
-                        variant="transparent"
-                        color="red"
-                        aria-label="삭제"
-                        size="xs"
-                        onClick={() => outcomeRemove(index)}
-                      >
-                        <IconTrash stroke={1.5} />
-                      </ActionIcon>
-                    }
-                  />
-                ))}
-              </Flex>
+            <Title order={3}>당첨 결과</Title>
+            <Flex
+              mih={50}
+              gap="md"
+              justify="space-between"
+              align="center"
+              direction="row"
+              wrap="nowrap"
+            >
+              <ScrollArea>
+                <Flex
+                  mih={50}
+                  gap="md"
+                  justify="center"
+                  align="center"
+                  direction="row"
+                  wrap="nowrap"
+                >
+                  {outcomeFields.map((field, index) => (
+                    <Input
+                      key={field.id}
+                      fieldName={`outcomes.${index}.value`}
+                      autoComplete="off"
+                      placeholder="당첨 결과"
+                      style={{ minWidth: 80 }}
+                      disabled={!!outcomeIndicesOfGame.length}
+                      rightSection={
+                        <ActionIcon
+                          variant="transparent"
+                          color="red"
+                          aria-label="삭제"
+                          size="xs"
+                          onClick={() => outcomeRemove(index)}
+                        >
+                          <IconTrash stroke={1.5} />
+                        </ActionIcon>
+                      }
+                    />
+                  ))}
+                </Flex>
+              </ScrollArea>
               <ActionIcon
                 variant="filled"
                 aria-label="Add"
@@ -269,7 +299,8 @@ function App() {
                 disabled={
                   showsLottie ||
                   outcomeFields.length >= participantFields.length ||
-                  outcomeFields.length >= MAX_OUTCOMES_LENGTH
+                  outcomeFields.length >= MAX_OUTCOMES_LENGTH ||
+                  !!outcomeIndicesOfGame.length
                 }
               >
                 <IconPlus stroke={1} />

@@ -16,8 +16,6 @@ const Input = ({ fieldName, size: _, ...rest }: InputProps) => {
     control,
   })
 
-  console.log('error', error)
-
   return <TextInput {...field} {...rest} error={error && error.message} />
 }
 
