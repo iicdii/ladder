@@ -265,11 +265,12 @@ function App() {
                 variant="filled"
                 aria-label="Add"
                 onClick={() => outcomeAppend({ value: ' ' })}
-                disabled={showsLottie}
+                disabled={showsLottie || outcomeFields.length >= participantFields.length}
               >
                 <IconPlus stroke={1} />
               </ActionIcon>
             </Flex>
+
             {/* 버튼 영역 */}
             <Flex mih={50} gap="md" justify="center" align="center" direction="row" wrap="nowrap">
               {outcomeIndicesOfGame.length === methods.getValues('outcomes').length ? (
