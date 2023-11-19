@@ -1,10 +1,8 @@
-import { InputHTMLAttributes } from 'react'
-
 import { useController, useFormContext } from 'react-hook-form'
 
-import { TextInput } from '@mantine/core'
+import { TextInput, TextInputProps } from '@mantine/core'
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends TextInputProps {
   fieldName: string
 }
 
@@ -17,6 +15,8 @@ const Input = ({ fieldName, size: _, ...rest }: InputProps) => {
     name: fieldName,
     control,
   })
+
+  console.log('error', error)
 
   return <TextInput {...field} {...rest} error={error && error.message} />
 }
