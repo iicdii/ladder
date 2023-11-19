@@ -10,8 +10,14 @@
   }
 }
 
+.lottie {
+  margin: 0 auto;
+  height: 180px;
+}
+
 .history {
   max-width: 500px;
+  height: 180px;
   margin: 0 auto;
 }
 
