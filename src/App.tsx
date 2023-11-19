@@ -22,6 +22,7 @@ import {
   Mark,
   Paper,
   ScrollArea,
+  Tooltip,
 } from '@mantine/core'
 import { useClipboard } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
@@ -325,14 +326,18 @@ function App() {
                 </Button>
               )}
 
-              <ActionIcon
-                variant="default"
-                aria-label="Share"
-                onClick={handleShareLink}
-                title="공유 링크 복사"
+              <Tooltip
+                label={
+                  <>
+                    참가자와 당첨 결과가 포함된 링크를 생성합니다.
+                    <br />이 링크를 통해 텍스트 입력 없이 게임을 공유할 수 있습니다.
+                  </>
+                }
               >
-                <IconShare stroke={2} />
-              </ActionIcon>
+                <ActionIcon variant="default" aria-label="Share" onClick={handleShareLink}>
+                  <IconShare stroke={2} />
+                </ActionIcon>
+              </Tooltip>
             </Flex>
           </Stack>
         </Container>
