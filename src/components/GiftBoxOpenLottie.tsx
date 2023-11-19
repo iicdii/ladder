@@ -5,17 +5,16 @@ import {
   Props as DotLottieProps,
   DotLottieCommonPlayer,
 } from '@dotlottie/react-player'
-
-import styles from './GiftBoxOpenLottie.module.css'
+import { Box } from '@mantine/core'
 
 interface GiftBoxOpenLottieProps extends Omit<DotLottieProps, 'src'> {}
 
 const GiftBoxOpenLottie = forwardRef<DotLottieCommonPlayer, GiftBoxOpenLottieProps>(
   (props, ref) => {
     return (
-      <div className={styles.container}>
+      <Box w={320} h={180}>
         <DotLottiePlayer src="/gift_box_open.lottie" {...props} ref={ref} />
-      </div>
+      </Box>
     )
   },
 )
