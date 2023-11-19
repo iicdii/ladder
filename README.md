@@ -1,30 +1,13 @@
-# React + TypeScript + Vite
+# 제비뽑기
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1a5aceb2-d760-4603-84db-bb47bbe1b6e6/deploy-status)](https://app.netlify.com/sites/draw-lots/deploys)
 
-Currently, two official plugins are available:
+https://draw-lots.netlify.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+불공정한 사다리타기를 대체할 제비뽑기 게임
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+> 사다리타기의 규칙에 따라 번호찍기를 1000번 반복하고 시뮬레이션을 해보면 당첨확률이 가장 높은 번호는 4번이다. 4는 1000번 중 210번이 걸리는데 당첨확률이 21%에 달한다. 다음으로 바로 오른쪽인 5번이 19.4%의 확률로 당첨되며 다음이 3번이다. 맨 오른쪽 끝의 8번은 3.3%에 불과하고 맨 앞쪽은 8.1%로 당첨확률이 매우 낮다. 하지만 이상하게 사람들은 사다리타기를 하면 양쪽 끝선을 가장 먼저 선택하는 경우가 거의 없다. 사다리타기는 모두가 공평하게 4분의 1, 즉 25% 확률로 당첨될 것이라고 생각한다.
+>
+> 하지만 양쪽 끝의 번호 1번과 8번을 선택한 사람이 편의점에 갈 확률은 11.4%밖에 되지 않는다. 4번과 5번을 고르는 사람은 심부름꾼이 될 확률이 40.4%나 된다. 사다리타기의 확률을 알지 못한다면 “요즘은 왠지 운이 따라주지 않네”라며 심부름을 다녀올 것이다. 확률에 대해 조금이라도 알고 있다면 양쪽 끝의 숫자를 택하는 게 좋다. 사다리타기를 간단한 그림으로 실험을 몇 번 해보면 원리를 쉽게 발견할 수 있다.
+>
+> _출처 : 경남일보 - 우리나라 최초의 지역신문(http://www.gnnews.co.kr)_
