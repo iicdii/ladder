@@ -23,6 +23,7 @@ import {
   Paper,
   ScrollArea,
   Tooltip,
+  Group,
 } from '@mantine/core'
 import { useClipboard } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
@@ -214,7 +215,22 @@ function App() {
             </Paper>
 
             {/* 참가자 입력 */}
-            <Title order={3}>참가자</Title>
+            <Group gap="xs">
+              <Title order={3}>참가자</Title>
+              <ActionIcon
+                variant="filled"
+                aria-label="Add"
+                onClick={() => participantAppend({ value: ' ' })}
+                disabled={
+                  showsLottie ||
+                  participantFields.length >= MAX_PARTICIPANTS_LENGTH ||
+                  !!participantIndicesOfGame.length
+                }
+                size="sm"
+              >
+                <IconPlus stroke={1} />
+              </ActionIcon>
+            </Group>
             <Flex
               mih={50}
               gap="md"
@@ -227,10 +243,10 @@ function App() {
                 <Flex
                   mih={50}
                   gap="md"
-                  justify="center"
+                  justify="flex-start"
                   align="center"
                   direction="row"
-                  wrap="nowrap"
+                  wrap="wrap"
                 >
                   {participantFields.map((field, index) => (
                     <Input
@@ -238,7 +254,7 @@ function App() {
                       fieldName={`participants.${index}.value`}
                       autoComplete="off"
                       placeholder="이름"
-                      style={{ minWidth: 80 }}
+                      style={{ minWidth: 100 }}
                       disabled={!!participantIndicesOfGame.length}
                       rightSection={
                         <ActionIcon
@@ -255,22 +271,25 @@ function App() {
                   ))}
                 </Flex>
               </ScrollArea>
+            </Flex>
+
+            {/* 당첨 결과 입력 */}
+            <Group gap="xs">
+              <Title order={3}>당첨 결과</Title>
               <ActionIcon
                 variant="filled"
                 aria-label="Add"
-                onClick={() => participantAppend({ value: ' ' })}
+                onClick={() => outcomeAppend({ value: ' ' })}
                 disabled={
                   showsLottie ||
                   participantFields.length >= MAX_PARTICIPANTS_LENGTH ||
                   !!participantIndicesOfGame.length
                 }
+                size="sm"
               >
                 <IconPlus stroke={1} />
               </ActionIcon>
-            </Flex>
-
-            {/* 당첨 결과 입력 */}
-            <Title order={3}>당첨 결과</Title>
+            </Group>
             <Flex
               mih={50}
               gap="md"
@@ -283,10 +302,10 @@ function App() {
                 <Flex
                   mih={50}
                   gap="md"
-                  justify="center"
+                  justify="flex-start"
                   align="center"
                   direction="row"
-                  wrap="nowrap"
+                  wrap="wrap"
                 >
                   {outcomeFields.map((field, index) => (
                     <Input
@@ -311,19 +330,6 @@ function App() {
                   ))}
                 </Flex>
               </ScrollArea>
-              <ActionIcon
-                variant="filled"
-                aria-label="Add"
-                onClick={() => outcomeAppend({ value: ' ' })}
-                disabled={
-                  showsLottie ||
-                  outcomeFields.length >= participantFields.length ||
-                  outcomeFields.length >= MAX_OUTCOMES_LENGTH ||
-                  !!outcomeIndicesOfGame.length
-                }
-              >
-                <IconPlus stroke={1} />
-              </ActionIcon>
             </Flex>
 
             {/* 버튼 영역 */}
